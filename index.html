@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<script type="text/javascript">
+
+	String.prototype.replaceAt=function(index, character, eraseleft) {
+		return this.substr(0, index + eraseleft) + character + this.substr(index+1);
+	}
+
+	function isUpperCase(aCharacter)    
+	{    
+		return (aCharacter >= 'A') && (aCharacter <= 'Z') || (aCharacter == "Č") || (aCharacter == "Ž")|| (aCharacter == "Š")|| (aCharacter == "Ř") || (aCharacter == "Á") || (aCharacter == "Ú");
+	}
+
+	function sklon(){
+		var text = document.getElementById('muz').value;
+		var zenText = text;
+		var zenTextInd = 0;
+		var strText = text;
+		var strTextInd = 0;
+		var zenText4 = text;
+		var zenText4Ind = 0;
+		var muzText4 = text;
+		var muzText4Ind =0;
+		var length = text.length;
+		var lastI = 0;
+
+		for (var i = 0; i <= length; i++) {
+			var rozdil = i - lastI;
+
+			zenTextInd += rozdil;
+			strTextInd += rozdil;
+			zenText4Ind += rozdil;
+			muzText4Ind += rozdil;
+
+			lastI = i;
+
+			if(isUpperCase(text.charAt(i))){
+				var x = text.charAt(i-2)
+				if ( x == "ý") {
+					zenText = zenText.replaceAt(zenTextInd-2, "á", 0);
+					strText = strText.replaceAt(strTextInd-2, "é", 0);
+					muzText4 = muzText4.replaceAt(muzText4Ind-2, "ého",0);
+					muzText4Ind += 2;
+					zenText4 = zenText4.replaceAt(zenText4Ind-2,"ou",0);
+					zenText4Ind += 1;
+				};
+				if(x=="í"){
+					muzText4 = muzText4.replaceAt(muzText4Ind-2, "ího",0);
+					muzText4Ind += 2;
+				}
+				if (x == "v") {
+					zenText = zenText.replaceAt(zenTextInd-2, "ova", -1);
+					zenTextInd +=1
+					muzText4 = muzText4.replaceAt(muzText4Ind-2, "ova",-1);
+					muzText4Ind += 1;
+					zenText4 = zenText4.replaceAt(zenText4Ind-2,"ovu",-1);
+					zenText4Ind += 1;
+					strText = strText.replaceAt(strTextInd-2, "ovo", -1);
+					strTextInd += 1;					
+				};
+			}
+
+		};
+		document.getElementById('zena').value = zenText;
+		document.getElementById('to').value = strText;
+		document.getElementById('muz4').value = muzText4;
+		document.getElementById('zena4').value = zenText4;
+		document.getElementById('muz').value = text;
+	}
+
+	</script>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="cs">
+	<title>
+		Skloňovatel	</title>
+	</head>
+	<body>
+		<h1>Skloňovač přídavných jmen</h1>
+		<table>
+			<tr>
+				<td>
+					<h2>Tvar mužský</h2>
+					<textarea id="muz" rows="25" cols="20"></textarea>
+				</td>
+				<td>
+					<h2> - 4. pád životný</h2>
+					<textarea id="muz4" rows="25" cols="20"></textarea>
+				</td>
+				<td>
+					<h2>Tvar ženský</h2>
+					<textarea id="zena" rows="25" cols="20"></textarea>
+				</td>
+				<td>
+					<h2> - 4. pád životný</h2>
+					<textarea id="zena4" rows="25" cols="20"></textarea>
+				</td>
+				<td>
+					<h2>Tvar střední</h2>
+					<textarea id="to" rows="25" cols="20"></textarea>
+				</td>
+			</tr>
+			<button onClick="sklon();">Skloň se!</button>
+			<table>
+			</body>
+			</html>
